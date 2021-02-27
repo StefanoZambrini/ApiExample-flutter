@@ -1,22 +1,7 @@
 {
-  "Post": {
-    "title": "int",
-    "duration": "string",
-    "subPosts": [
-      {
-        "id": "string",
-        "title": "int"
-      },
-      {
-        "id": "string",
-        "title": "int"
-      }
-      ],
-    "published": "boolean",
-    "comments": "Comment[]"
-  },
-  "Comment": {
-    "body": "string",
-    "post": "Post"
-  }
+  "city": "string",
+  "streets": [
+    "string",
+    "string"
+  ]
 }
