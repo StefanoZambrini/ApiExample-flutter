@@ -2,6 +2,16 @@
   "Post": {
     "title": "int",
     "duration": "string",
+    "subPosts": [
+      {
+        "id": "string",
+        "title": "int"
+      },
+      {
+        "id": "string",
+        "title": "int"
+      }
+      ]
     "published": "boolean",
     "comments": "Comment[]"
   },
