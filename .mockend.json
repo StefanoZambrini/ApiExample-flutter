@@ -11,7 +11,7 @@
         "id": "string",
         "title": "int"
       }
-      ]
+      ],
     "published": "boolean",
     "comments": "Comment[]"
   },
