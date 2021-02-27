@@ -1,7 +1,12 @@
 {
-  "city": "string",
-  "streets": [
-    "string",
-    "string"
-  ]
+  "Post": {
+    "title": "string",
+    "views": "int",
+    "published": "boolean",
+    "comments": "Comment[]"
+  },
+  "Comment": {
+    "body": "string",
+    "post": "Post"
+  }
 }
