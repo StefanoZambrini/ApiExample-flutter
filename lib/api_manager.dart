@@ -11,11 +11,11 @@ import 'dart:io'; // for http headers
 // The function also needs to be async
 Future<List<Post>> getPosts() async {
 
-  String url = "https://jsonplaceholder.typicode.com";
+  String url = "https://a11f26af-eceb-45d5-8aca-416c7df64277.mock.pstmn.io";
 
   // return type is http.Response
   // for examples with headers, check api_post
-  http.Response response = await http.get(url + "/posts");
+  http.Response response = await http.get(url);
 
   // check response status code
   if (response.statusCode == 200) {

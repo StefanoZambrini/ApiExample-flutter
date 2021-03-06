@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
             // Otherwise, show the list of Posts
                 : ListView.builder(
               // this is going to be the list length
-              itemCount: posts.length,
+              itemCount: posts?.length ?? 0,
               // this is a function to build each item on the list
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
