@@ -11,13 +11,18 @@ import 'dart:io'; // for http headers
 // The function also needs to be async
 Future<List<Post>> getPosts() async {
 
-  String url = "https://a11f26af-eceb-45d5-8aca-416c7df64277.mock.pstmn.io";
+  String url = "https://holidayapi.com/v1/holidays?pretty&key=058ae1b8-9d5a-4cf1-8fa1-022bfda36ad3&country=IT&year=2020";
 
   // return type is http.Response
   // for examples with headers, check api_post
-  http.Response response = await http.get(url);
+  http.Response response = await
+  http.get(url);
 
-  // check response status code
+  if (response.statusCode == 402) {
+    print(response.statusCode.toString());
+  }
+
+    // check response status code
   if (response.statusCode == 200) {
     // the response body
     String responseBody = response.body;
@@ -26,9 +31,9 @@ Future<List<Post>> getPosts() async {
     dynamic decodedJson = json.decode(responseBody);
 
     // use this when the response contains an array
-    List resList = (decodedJson as List)
+    List<dynamic> resList = decodedJson["holidays"]
     // map each element of the array/list to a new Post object as defined in class_post.dart
-        .map((item) => new Post.getfromJson(item))
+        .map<Post>((item) => new Post.fromJson(item))
     // convert the json to a list
         .toList();
 

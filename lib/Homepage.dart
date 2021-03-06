@@ -1,6 +1,8 @@
 import 'package:api_challenge/api_manager.dart';
 import 'package:api_challenge/model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 
 
 class MyHomePage extends StatefulWidget {
@@ -57,8 +59,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         horizontal: 10.0,
                         vertical: 10.0
                     ),
-                    title: Text(posts[index].title, style: TextStyle(fontSize: 20),),
-                    subtitle: Text(posts[index].body)
+                    title: Text(posts[index].name, style: TextStyle(fontSize: 20),),
+                    subtitle: Text(posts[index].country),
+                    trailing: Text(DateFormat('yyyy-MM-dd – kk:mm').format(posts[index].date),
                 );
               },
             )
