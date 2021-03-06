@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     title: Text(posts[index].name, style: TextStyle(fontSize: 20),),
                     subtitle: Text(posts[index].country),
-                    trailing: Text(DateFormat('yyyy-MM-dd – kk:mm').format(posts[index].date),
+                    trailing: Text(DateFormat('yyyy-MM-dd – kk:mm').format(posts[index].date)),
                 );
               },
             )
