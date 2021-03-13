@@ -27,7 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // show Loading Screen
     setState(() => isLoading = true);
     // get Posts
-    posts = await getPosts();
+    posts = (await getPosts()) as List<Post>;
     // hide Loading Screen
     setState(() => isLoading = false);
 
@@ -57,8 +57,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         horizontal: 10.0,
                         vertical: 10.0
                     ),
-                    title: Text(posts[index].title, style: TextStyle(fontSize: 20),),
-                    subtitle: Text(posts[index].body)
+                    title: Text(posts[index].name ?? 'default value', style: TextStyle(fontSize: 20),),
+                    subtitle: Text(posts[index].url ??'default value'),
+                    trailing: Text(posts[index].createdAt.toString() ??'default value'),
                 );
               },
             )
