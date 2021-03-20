@@ -1,19 +1,19 @@
 import 'package:api_challenge/api_manager.dart';
-import 'package:api_challenge/model.dart';
+import 'package:api_challenge/models/model.dart';
 import 'package:flutter/material.dart';
 
+import 'clientTest.dart';
+import 'models/genre.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-
 class _MyHomePageState extends State<MyHomePage> {
-
   // page variables
   bool isLoading = false;
-  List<Post> posts;
+  List<Welcome> posts;
 
   // override initState to run the _fetchData() function on state change
   @override
@@ -27,7 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // show Loading Screen
     setState(() => isLoading = true);
     // get Posts
-    posts = (await getPosts()) as List<Post>;
+    posts = (await getGames()) as List<Welcome>;
     // hide Loading Screen
     setState(() => isLoading = false);
 
@@ -42,28 +42,23 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text("Posts"),
         ),
         body: Center(
-          // check if loading screen needs to be shown
+            // check if loading screen needs to be shown
             child: isLoading
-            // if it is, show the Circular Progress Indicator
+                // if it is, show the Circular Progress Indicator
                 ? CircularProgressIndicator()
-            // Otherwise, show the list of Posts
+                // Otherwise, show the list of Posts
                 : ListView.builder(
-              // this is going to be the list length
-              itemCount: posts?.length ?? 0,
-              // this is a function to build each item on the list
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                    contentPadding: EdgeInsets.symmetric(
-                        horizontal: 10.0,
-                        vertical: 10.0
-                    ),
-                    title: Text(posts[index].name ?? 'default value', style: TextStyle(fontSize: 20),),
-                    subtitle: Text(posts[index].url ??'default value'),
-                    trailing: Text(posts[index].createdAt.toString() ??'default value'),
-                );
-              },
-            )
-        )
-    );
+                    itemCount: posts?.length ?? 0,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 10.0),
+                        title: Text(
+                          posts[index].name ?? 'default value',
+                          style: TextStyle(fontSize: 20),
+                        )
+                      );
+                    },
+                  )));
   }
 }

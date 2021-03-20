@@ -26,7 +26,7 @@ class Post {
   int id;
   int category;
   int createdAt;
-  List<int> externalGames;
+  List<String> externalGames;
   String name;
   String slug;
   int updatedAt;
@@ -35,11 +35,12 @@ class Post {
   String versionTitle;
   String checksum;
 
+
 factory Post.fromJson(Map<String, dynamic> json) => Post(
     id: json["id"],
     category: json["category"],
     createdAt: json["created_at"],
-    // externalGames: List<int>.from(json["external_games"].map((x) => x)),
+    externalGames: List<String>.from(json["external_games"].map((x) => switcher(x))),
     name: json["name"],
     slug: json["slug"],
     updatedAt: json["updated_at"],
@@ -53,7 +54,7 @@ factory Post.fromJson(Map<String, dynamic> json) => Post(
     "id": id,
     "category": category,
     "created_at": createdAt,
-    "external_games": List<dynamic>.from(externalGames.map((x) => x)),
+    "external_games": List<String>.from(externalGames.map((x) => switcher(x))),
     "name": name,
     "slug": slug,
     "updated_at": updatedAt,
@@ -62,4 +63,12 @@ factory Post.fromJson(Map<String, dynamic> json) => Post(
     "version_title": versionTitle,
     "checksum": checksum,
   };
+}
+
+String switcher(int) {
+  String value = "";
+  if (int == 4) {
+    value = "Fighting";
+  }
+  return value;
 }

@@ -1,4 +1,4 @@
-import 'package:api_challenge/model.dart';
+import 'package:api_challenge/models/model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http; // for making HTTP calls
 import 'dart:convert'; // for converting JSON
@@ -31,7 +31,6 @@ Future<List<Post>> getPosts() async {
 
   // check response status code
   if (response.statusCode == 200) {
-    debugPrint(response.body);
     // the response body
     String responseBody = response.body;
 
