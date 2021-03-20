@@ -17,7 +17,7 @@ Future<List<Welcome>> getGames() async {
   // Find games with 'infamous' in their name and return
   // the results' name and expand their release_dates and platforms.
   var gamesResponse = await client.games(new IGDBRequestParameters(
-      search: 'Olija',
+      search: 'Sky Break',
       fields: ['name', 'release_dates.*, platforms.*']
   ));
 

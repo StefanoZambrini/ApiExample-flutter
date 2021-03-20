@@ -1,5 +1,6 @@
 import 'package:api_challenge/api_manager.dart';
 import 'package:api_challenge/models/model.dart';
+import 'package:api_challenge/platformCard.dart';
 import 'package:flutter/material.dart';
 
 import 'clientTest.dart';
@@ -47,18 +48,29 @@ class _MyHomePageState extends State<MyHomePage> {
                 // if it is, show the Circular Progress Indicator
                 ? CircularProgressIndicator()
                 // Otherwise, show the list of Posts
-                : ListView.builder(
-                    itemCount: posts?.length ?? 0,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 10.0),
-                        title: Text(
-                          posts[index].name ?? 'default value',
-                          style: TextStyle(fontSize: 20),
-                        )
-                      );
-                    },
-                  )));
+                : Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+              shrinkWrap: true,
+                          itemCount: posts?.length ?? 0,
+              itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: Column(
+
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(posts[index].name ?? 'default value'),
+                                    PlatformCard(posts, index)
+                                  ]),
+                            );
+                          },
+                        ),
+                    ),
+                  ],
+                )));
   }
+
 }
