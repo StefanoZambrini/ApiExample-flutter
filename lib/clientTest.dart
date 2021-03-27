@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:igdb_client/igdb_client.dart';
 
-import 'models/genre.dart';
+import 'models/Game.dart';
 
-Future<List<Welcome>> getGames() async {
+Future<List<Game>> getGames() async {
 
   // You should only run this once, then save it somewhere. It will eventually
   // expire after ~60 days, at which point you will need to getOauthToken again
@@ -14,16 +14,19 @@ Future<List<Welcome>> getGames() async {
 
   var client = new IGDBClient("https://a11f26af-eceb-45d5-8aca-416c7df64277.mock.pstmn.io", "e6ib30yst9prtoz6oed4o5pqfbfaso", "lkuzg6ygh6silvk4ksfkyeeysmncib", logger: IGDBConsoleLogger());
 
+  var myParameters = IGDBRequestParameters(
+      fields: ['name', 'release_dates.*', 'platforms.*', 'genres.*', 'aggregated_rating', 'aggregated_rating_count', 'rating', 'screenshots.*', 'summary', 'total_rating', 'total_rating_count', 'url', 'videos.*', 'websites.*', 'checksum'],
+    limit: 10
+  );
+
   // Find games with 'infamous' in their name and return
   // the results' name and expand their release_dates and platforms.
-  var gamesResponse = await client.games(new IGDBRequestParameters(
-      search: 'Sky Break',
-      fields: ['name', 'release_dates.*, platforms.*']
-  ));
+  var gamesResponse = await client.games(myParameters);
+
 
   if (gamesResponse.isSuccess()) {
     List<dynamic> myData = gamesResponse.data;
-    List resList = myData.map((item) => new Welcome.fromJson(item)).toList();
+    List resList = myData.map((item) => new Game.fromJson(item)).toList();
     return resList;
   }
   else {

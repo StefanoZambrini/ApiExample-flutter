@@ -1,10 +1,8 @@
-import 'package:api_challenge/api_manager.dart';
-import 'package:api_challenge/models/model.dart';
 import 'package:api_challenge/platformCard.dart';
 import 'package:flutter/material.dart';
 
 import 'clientTest.dart';
-import 'models/genre.dart';
+import 'models/Game.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -14,7 +12,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   // page variables
   bool isLoading = false;
-  List<Welcome> posts;
+  List<Game> posts;
 
   // override initState to run the _fetchData() function on state change
   @override
@@ -28,7 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // show Loading Screen
     setState(() => isLoading = true);
     // get Posts
-    posts = (await getGames()) as List<Welcome>;
+    posts = (await getGames()) as List<Game>;
     // hide Loading Screen
     setState(() => isLoading = false);
 

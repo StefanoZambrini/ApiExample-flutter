@@ -1,9 +1,9 @@
-import 'package:api_challenge/models/genre.dart';
+import 'package:api_challenge/models/Game.dart';
 import 'package:flutter/material.dart';
 
 class PlatformCard extends StatelessWidget {
 
-  List<Welcome> posts;
+  List<Game> posts;
   int index;
 
   PlatformCard(this.posts, this.index);
@@ -13,7 +13,7 @@ class PlatformCard extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-            height: 200,
+            height: 50,
             width: 300, // constrain height// constrain height
             child: ListView.builder(
               shrinkWrap: true,
