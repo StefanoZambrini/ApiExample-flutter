@@ -41,19 +41,4 @@ class ReleaseDate {
     y: json["y"],
     checksum: json["checksum"],
   );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "category": category,
-    "created_at": createdAt,
-    "date": date,
-    "game": game,
-    "human": human,
-    "m": m,
-    "platform": platform,
-    "region": region,
-    "updated_at": updatedAt,
-    "y": y,
-    "checksum": checksum,
-  };
 }

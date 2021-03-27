@@ -2,8 +2,6 @@ import 'dart:convert';
 
 List<Screenshot> postsFromJson(String str) => List<Screenshot>.from(json.decode(str).map((x) => Screenshot.fromJson(x)));
 
-String postsToJson(List<Screenshot> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
 class Screenshot {
   Screenshot({
     this.id,
@@ -38,16 +36,4 @@ class Screenshot {
     width: json["width"],
     checksum: json["checksum"],
   );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "alpha_channel": alphaChannel == null ? null : alphaChannel,
-    "animated": animated == null ? null : animated,
-    "game": game,
-    "height": height,
-    "image_id": imageId,
-    "url": url,
-    "width": width,
-    "checksum": checksum,
-  };
 }

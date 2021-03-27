@@ -4,10 +4,7 @@ import 'package:api_challenge/models/Game.dart';
 
 List<Cover> postsFromJson(String str) => List<Cover>.from(json.decode(str).map((x) => Cover.fromJson(x)));
 
-String postsToJson(List<Cover> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
 final coverDemo = Cover(id: 10, alphaChannel: false, animated: true, game: gameDemo, height: 10, imageId: "imageID", url: "url", width: 10, checksum: "checkSum");
-
 
 class Cover {
   Cover({
@@ -43,16 +40,4 @@ class Cover {
     width: json["width"],
     checksum: json["checksum"],
   );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "alpha_channel": alphaChannel == null ? null : alphaChannel,
-    "animated": animated == null ? null : animated,
-    "game": game,
-    "height": height,
-    "image_id": imageId,
-    "url": url,
-    "width": width,
-    "checksum": checksum,
-  };
 }

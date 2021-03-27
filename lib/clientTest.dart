@@ -18,11 +18,7 @@ Future<List<Game>> getGames() async {
       fields: ['name', 'release_dates.*', 'platforms.*', 'genres.*', 'aggregated_rating', 'aggregated_rating_count', 'rating', 'screenshots.*', 'summary', 'total_rating', 'total_rating_count', 'url', 'videos.*', 'websites.*', 'checksum'],
     limit: 10
   );
-
-  // Find games with 'infamous' in their name and return
-  // the results' name and expand their release_dates and platforms.
   var gamesResponse = await client.games(myParameters);
-
 
   if (gamesResponse.isSuccess()) {
     List<dynamic> myData = gamesResponse.data;
@@ -33,26 +29,129 @@ Future<List<Game>> getGames() async {
     print("ERROR in getting post: status code: " + gamesResponse.status.toString());
     return null;
   }
-  printResponse(gamesResponse);
-/*
-  // Find games that are not yet released but are releasing soon in the
-  // North American, Worlwide, or Unspecified regions, then sort by
-  // release date.
+}
+
+Future<List<Game>> getNextReleases() async {
+  var client = new IGDBClient("https://a11f26af-eceb-45d5-8aca-416c7df64277.mock.pstmn.io", "e6ib30yst9prtoz6oed4o5pqfbfaso", "lkuzg6ygh6silvk4ksfkyeeysmncib", logger: IGDBConsoleLogger());
+
   int msecSinceEpoch = DateTime.now().millisecondsSinceEpoch;
   int secsSinceEpoch = msecSinceEpoch~/1000;
   String timeNow = secsSinceEpoch.toString();
-  var releaseResponse = await client.releaseDates(new IGDBRequestParameters(
-      filters: 'date > $timeNow & (region = ${IGDBRegions.NORTH_AMERICA.id} | region = ${IGDBRegions.NONE.id} | region = ${IGDBRegions.WORLDWIDE.id})',
-      order: 'date asc'
-  ));
-  printResponse(releaseResponse);
+  print(timeNow);
 
-  var gameIdResponse = await client.games(new IGDBRequestParameters(
-    ids: [43378],
-  ));
-//  printResponse(gameIdResponse);
- */
+  var myParameters = IGDBRequestParameters(
+      fields: ['name', 'first_release_date', 'platforms.*'],
+      limit: 30,
+      filters: 'first_release_date > $timeNow',
+      order: 'first_release_date asc'
+  );
+
+  var gamesResponse = await client.games(myParameters);
+
+  if (gamesResponse.isSuccess()) {
+    List<dynamic> myData = gamesResponse.data;
+    List resList = myData.map((item) => new Game.fromJson(item)).toList();
+    return resList;
+  }
+  else {
+    print("ERROR in getting post: status code: " + gamesResponse.status.toString());
+    return null;
+  }
 }
+
+Future<List<Game>> getMostRated() async {
+  var client = new IGDBClient("https://a11f26af-eceb-45d5-8aca-416c7df64277.mock.pstmn.io", "e6ib30yst9prtoz6oed4o5pqfbfaso", "lkuzg6ygh6silvk4ksfkyeeysmncib", logger: IGDBConsoleLogger());
+
+
+  var myParameters = IGDBRequestParameters(
+    fields: ['name', 'release_dates.date', 'platforms.name', 'rating', 'rating_count'],
+    limit: 10,
+    filters: ('rating > 0 & rating < 100 & rating_count > 80'),
+    order: 'rating desc'
+  );
+
+  var gamesResponse = await client.games(myParameters);
+
+  if (gamesResponse.isSuccess()) {
+    List<dynamic> myData = gamesResponse.data;
+    List resList = myData.map((item) => new Game.fromJson(item)).toList();
+    return resList;
+  }
+  else {
+    print("ERROR in getting post: status code: " + gamesResponse.status.toString());
+    return null;
+  }
+}
+
+Future<List<Game>> getTrendingNow() async {
+  var client = new IGDBClient("https://a11f26af-eceb-45d5-8aca-416c7df64277.mock.pstmn.io", "e6ib30yst9prtoz6oed4o5pqfbfaso", "lkuzg6ygh6silvk4ksfkyeeysmncib", logger: IGDBConsoleLogger());
+
+  int msecSinceEpoch = DateTime.now().millisecondsSinceEpoch;
+  int secsSinceEpoch = msecSinceEpoch~/1000;
+  String timeNow = secsSinceEpoch.toString();
+  print(timeNow);
+
+  int thisYear = 1609455600000~/1000;
+  String timeYear = thisYear.toString();
+
+  var myParameters = IGDBRequestParameters(
+      fields: ['name', 'first_release_date', 'platforms.*', 'rating', 'release_dates.y'],
+      limit: 30,
+      filters: 'rating > 70 & first_release_date > $timeYear',
+      order: 'rating desc'
+  );
+
+  var gamesResponse = await client.games(myParameters);
+
+  if (gamesResponse.isSuccess()) {
+    List<dynamic> myData = gamesResponse.data;
+    List resList = myData.map((item) => new Game.fromJson(item)).toList();
+    return resList;
+  }
+  else {
+    print("ERROR in getting post: status code: " + gamesResponse.status.toString());
+    return null;
+  }
+}
+
+Future<List<Game>> getRecentlyReleased() async {
+  var client = new IGDBClient("https://a11f26af-eceb-45d5-8aca-416c7df64277.mock.pstmn.io", "e6ib30yst9prtoz6oed4o5pqfbfaso", "lkuzg6ygh6silvk4ksfkyeeysmncib", logger: IGDBConsoleLogger());
+
+
+  DateTime currentDate = DateTime.now();
+  DateTime previousDate = DateTime(currentDate.year, currentDate.month, currentDate.day - 15);
+  int msecsPreviousDate = previousDate.millisecondsSinceEpoch;
+  int secsPreviousDate = msecsPreviousDate~/1000;
+  String timePast = secsPreviousDate.toString();
+
+
+  int msecSinceEpoch = DateTime.now().millisecondsSinceEpoch;
+  int secsSinceEpoch = msecSinceEpoch~/1000;
+  String timeNow = secsSinceEpoch.toString();
+
+  int thisYear = 1609455600000~/1000;
+  String timeYear = thisYear.toString();
+
+  var myParameters = IGDBRequestParameters(
+      fields: ['name', 'first_release_date', 'platforms.*', 'rating', 'release_dates.y'],
+      limit: 30,
+      filters: 'first_release_date > $timePast &  first_release_date < $timeNow',
+      order: 'first_release_date desc'
+  );
+
+  var gamesResponse = await client.games(myParameters);
+
+  if (gamesResponse.isSuccess()) {
+    List<dynamic> myData = gamesResponse.data;
+    List resList = myData.map((item) => new Game.fromJson(item)).toList();
+    return resList;
+  }
+  else {
+    print("ERROR in getting post: status code: " + gamesResponse.status.toString());
+    return null;
+  }
+}
+
 
 
 printResponse(IGDBResponse resp) {

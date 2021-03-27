@@ -1,4 +1,5 @@
 import 'package:api_challenge/platformCard.dart';
+import 'package:api_challenge/releaseCard.dart';
 import 'package:flutter/material.dart';
 
 import 'clientTest.dart';
@@ -26,7 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // show Loading Screen
     setState(() => isLoading = true);
     // get Posts
-    posts = (await getGames()) as List<Game>;
+    posts = (await getRecentlyReleased()) as List<Game>;
     // hide Loading Screen
     setState(() => isLoading = false);
 
@@ -60,8 +61,22 @@ class _MyHomePageState extends State<MyHomePage> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Text(posts[index].name ?? 'default value'),
-                                    PlatformCard(posts, index)
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Text(posts[index].name ?? 'default value'),
+                                        ReleaseCard(posts, index)
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        PlatformCard(posts, index),
+                                        Text(posts[index].rating.toStringAsFixed(2) ?? 'N/A')
+                                      ],
+                                    ),
                                   ]),
                             );
                           },

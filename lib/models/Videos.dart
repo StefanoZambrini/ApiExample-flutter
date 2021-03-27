@@ -6,8 +6,6 @@ import 'dart:convert';
 
 List<Videos> postsFromJson(String str) => List<Videos>.from(json.decode(str).map((x) => Videos.fromJson(x)));
 
-String postsToJson(List<Videos> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
 class Videos {
   Videos({
     this.id,
@@ -30,12 +28,4 @@ class Videos {
     videoId: json["video_id"],
     checksum: json["checksum"],
   );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "game": game,
-    "name": name,
-    "video_id": videoId,
-    "checksum": checksum,
-  };
 }
