@@ -14,25 +14,21 @@ class _MyHomePageState extends State<MyHomePage> {
   // page variables
   bool isLoading = false;
   List<Game> posts;
+  String searchGames;
+  TextEditingController _textController = TextEditingController();
+  List<Game> newDataList = [];
 
-  // override initState to run the _fetchData() function on state change
   @override
   void initState() {
     _fetchData();
     super.initState();
   }
 
-  // async function to call the API and show/hide loading screens
   Future _fetchData() async {
-    // show Loading Screen
     setState(() => isLoading = true);
-    // get Posts
     posts = (await getRecentlyReleased()) as List<Game>;
-    // hide Loading Screen
     setState(() => isLoading = false);
-
-    // create Post
-    // print(await createPost());
+    newDataList = List.from(posts);
   }
 
   @override
@@ -49,10 +45,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 // Otherwise, show the list of Posts
                 : Column(
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: TextField(
+                        controller: _textController,
+                        decoration: InputDecoration(
+                          hintText: 'Search Here...',
+                        ),
+                        onChanged: onItemChanged,
+                      ),
+                    ),
                     Expanded(
                       child: ListView.builder(
               shrinkWrap: true,
-                          itemCount: posts?.length ?? 0,
+                          itemCount: newDataList?.length ?? 0,
               itemBuilder: (BuildContext context, int index) {
                             return Padding(
                               padding: EdgeInsets.all(10.0),
@@ -65,16 +71,16 @@ class _MyHomePageState extends State<MyHomePage> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        Text(posts[index].name ?? 'default value'),
-                                        ReleaseCard(posts, index)
+                                        Text(newDataList[index].name ?? 'default value'),
+                                        ReleaseCard(newDataList, index)
                                       ],
                                     ),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        PlatformCard(posts, index),
-                                        Text(posts[index].rating.toStringAsFixed(2) ?? 'N/A')
+                                        PlatformCard(newDataList, index),
+                                        Text(newDataList[index].rating.toStringAsFixed(2) ?? 'N/A')
                                       ],
                                     ),
                                   ]),
@@ -86,4 +92,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 )));
   }
 
+  onItemChanged(String value) {
+    setState(() {
+      newDataList = posts
+          .where((x) => x.name.toLowerCase().contains(value.toLowerCase()))
+          .toList();
+    });
+    }
 }
