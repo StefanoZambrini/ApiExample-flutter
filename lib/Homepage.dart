@@ -26,7 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future _fetchData() async {
     setState(() => isLoading = true);
-    posts = (await getRecentlyReleased()) as List<Game>;
+    posts = (await getMostRated()) as List<Game>;
     setState(() => isLoading = false);
     newDataList = List.from(posts);
   }

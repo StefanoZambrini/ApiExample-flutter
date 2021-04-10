@@ -20,7 +20,6 @@ class ReleaseCard extends StatelessWidget {
 }
 
 String stringDate(int Timestamp) {
-  debugPrint(Timestamp.toString());
   DateTime myDate = DateTime.fromMillisecondsSinceEpoch(Timestamp * 1000);
   final DateTime now = DateTime.now();
   final DateFormat formatter = DateFormat('yyyy-MM-dd');

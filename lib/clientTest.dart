@@ -64,8 +64,8 @@ Future<List<Game>> getMostRated() async {
 
 
   var myParameters = IGDBRequestParameters(
-    fields: ['name', 'release_dates.date', 'platforms.name', 'rating', 'rating_count'],
-    limit: 10,
+    fields: ['name', 'first_release_date', 'platforms.name', 'rating', 'rating_count'],
+    limit: 50,
     filters: ('rating > 0 & rating < 100 & rating_count > 80'),
     order: 'rating desc'
   );
